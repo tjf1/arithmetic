@@ -1,4 +1,5 @@
 package arithmetic;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
@@ -6,6 +7,7 @@ import javax.swing.*;
 
 public class arithmetic implements ActionListener {
 	JFrame f;
+	JLabel title, title1;
 	JTextField jfirst1, jfirst2, jfirst3, jfirst4, jfirst5, jfirst6, jfirst7,
 			jfirst8, jfirst9, jfirst10;// 10道题的分别的第一个数据
 	JLabel jsymbol1, jsymbol2, jsymbol3, jsymbol4, jsymbol5, jsymbol6,
@@ -17,19 +19,21 @@ public class arithmetic implements ActionListener {
 	JLabel jjudge1, jjudge2, jjudge3, jjudge4, jjudge5, jjudge6, jjudge7,
 			jjudge8, jjudge9, jjudge10;// 判断10道题输入答案的对错
 	JTextField jjresult1, jjresult2, jjresult3, jjresult4, jjresult5,
-			jjresult6, jjresult7, jjresult8, jjresult9, jjresult10;//10道题分别的 正确答案
+			jjresult6, jjresult7, jjresult8, jjresult9, jjresult10;// 10道题分别的
+	// 正确答案
 	JButton SubmitBtn;// 提交答案按钮
 	JButton AddBtn, SubBtn, MulBtn, DivBtn, ExitBtn;// 加法测试，减法测试，乘法测试，除法测试，退出系统
 	JLabel jtotle, jright, jjright;// 总共题数，提示：“正确题数：”，正确的题数
 
-	int first1, first2, first3, first4, first5, first6, first7, first8, first9,
-			first10;
-	int second1, second2, second3, second4, second5, second6, second7, second8,
-			second9, second10;
+	float first1, first2, first3, first4, first5, first6, first7, first8,
+			first9, first10;
+	float second1, second2, second3, second4, second5, second6, second7,
+			second8, second9, second10;
+	int flag;
 
 	public arithmetic() {
 		f = new JFrame(" 小学四则运算系统");
-		f.setBounds(200, 100, 1100, 520);
+		f.setBounds(100, 100, 1150, 520);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		Container c = f.getContentPane();
@@ -68,12 +72,20 @@ public class arithmetic implements ActionListener {
 		box11.add(Box.createVerticalStrut(35));
 
 		// 添加标签：“您已进入加法测试，现在开始答题："”
-		JLabel title = new JLabel("您已进入加法测试，现在开始答题：");
+		title = new JLabel("您好，欢迎进入小学四则运算系统！");
 		title.setFont(new Font("黑体", Font.BOLD, 18));
 		Box box = Box.createHorizontalBox();
 		box.add(Box.createHorizontalGlue());
 		box.add(title);
 		box.add(Box.createHorizontalGlue());
+
+		// 添加提示标签
+		title1 = new JLabel("注：请在左边栏内选择运算后开始答题，除法运算结果保留两位小数，其余运算保留一位小数。");
+		title1.setFont(new Font("黑体", Font.BOLD, 14));
+		Box box12 = Box.createHorizontalBox();
+		box12.add(Box.createHorizontalGlue());
+		box12.add(title1);
+		box12.add(Box.createHorizontalGlue());
 
 		// 添加每道题的符号标签
 		jsymbol1 = new JLabel("?");
@@ -348,14 +360,17 @@ public class arithmetic implements ActionListener {
 		box5.add(jjresult10);
 		box5.add(Box.createHorizontalStrut(50));
 
+		// 设置提交答案按钮
 		SubmitBtn = new JButton("提交答案");
 		SubmitBtn.setFont(new Font("黑体", Font.BOLD, 18));
 		SubmitBtn.addActionListener(this);
+		// 添加总题数标签
 		jtotle = new JLabel("总题数：10 题");
 		jtotle.setFont(new Font("黑体", Font.BOLD, 18));
+		// 添加答对题数标签
 		jright = new JLabel("答对题数：");
 		jright.setFont(new Font("黑体", Font.BOLD, 18));
-		jjright = new JLabel("？");
+		jjright = new JLabel("0");
 		jjright.setFont(new Font("黑体", Font.BOLD, 18));
 		Box box6 = Box.createHorizontalBox();
 		box6.add(Box.createHorizontalStrut(50));
@@ -368,9 +383,12 @@ public class arithmetic implements ActionListener {
 		box6.add(jjright);
 		box6.add(Box.createHorizontalStrut(50));
 
+		// 创建一个容器
 		Box box7 = Box.createVerticalBox();
 		box7.add(Box.createVerticalStrut(30));
 		box7.add(box);
+		box7.add(Box.createVerticalStrut(30));
+		box7.add(box12);
 		box7.add(Box.createVerticalStrut(30));
 		box7.add(box1);
 		box7.add(Box.createVerticalStrut(30));
@@ -385,6 +403,7 @@ public class arithmetic implements ActionListener {
 		box7.add(box6);
 		box7.add(Box.createVerticalStrut(30));
 
+		// 创建一个容器
 		Box box8 = Box.createHorizontalBox();
 		box8.add(box11);
 		box8.add(Box.createHorizontalStrut(40));
@@ -404,6 +423,7 @@ public class arithmetic implements ActionListener {
 
 		/* 加法计算 */
 		if (e.getSource() == AddBtn) {
+			flag = 1;
 			jsymbol1.setText("+");
 			jsymbol2.setText("+");
 			jsymbol3.setText("+");
@@ -414,120 +434,11 @@ public class arithmetic implements ActionListener {
 			jsymbol8.setText("+");
 			jsymbol9.setText("+");
 			jsymbol10.setText("+");
-			janswer1.setText("");
-			janswer2.setText("");
-			janswer3.setText("");
-			janswer4.setText("");
-			janswer5.setText("");
-			janswer6.setText("");
-			janswer7.setText("");
-			janswer8.setText("");
-			janswer9.setText("");
-			janswer10.setText("");
-			jjresult1.setText("");
-			jjresult2.setText("");
-			jjresult3.setText("");
-			jjresult4.setText("");
-			jjresult5.setText("");
-			jjresult6.setText("");
-			jjresult7.setText("");
-			jjresult8.setText("");
-			jjresult9.setText("");
-			jjresult10.setText("");
-			jjright.setText("?");
-			Random rand = new Random();
-
-			first1 = rand.nextInt(200);
-			first1 = first1 - 100;
-			second1 = rand.nextInt(200);
-			second1 = second1 - 100;
-			String f1 = Float.toString(first1);
-			jfirst1.setText(f1);
-			String s1 = Float.toString(second1);
-			jsecond1.setText(s1);
-
-			first2 = rand.nextInt(200);
-			first2 = first2 - 100;
-			second2 = rand.nextInt(200);
-			second2 = second2 - 100;
-			String f2 = Float.toString(first2);
-			jfirst2.setText(f2);
-			String s2 = Float.toString(second2);
-			jsecond2.setText(s2);
-
-			first3 = rand.nextInt(200);
-			first3 = first3 - 100;
-			second3 = rand.nextInt(200);
-			second3 = second3 - 100;
-			String f3 = Float.toString(first3);
-			jfirst3.setText(f3);
-			String s3 = Float.toString(second3);
-			jsecond3.setText(s3);
-
-			first4 = rand.nextInt(200);
-			first4 = first4 - 100;
-			second4 = rand.nextInt(200);
-			second4 = second4 - 100;
-			String f4 = Float.toString(first4);
-			jfirst4.setText(f4);
-			String s4 = Float.toString(second4);
-			jsecond4.setText(s4);
-
-			first5 = rand.nextInt(200);
-			first5 = first5 - 100;
-			second5 = rand.nextInt(200);
-			second5 = second5 - 100;
-			String f5 = Float.toString(first5);
-			jfirst5.setText(f5);
-			String s5 = Float.toString(second5);
-			jsecond5.setText(s5);
-
-			first6 = rand.nextInt(200);
-			first6 = first6 - 100;
-			second6 = rand.nextInt(200);
-			second6 = second6 - 100;
-			String f6 = Float.toString(first6);
-			jfirst6.setText(f6);
-			String s6 = Float.toString(second6);
-			jsecond6.setText(s6);
-
-			first7 = rand.nextInt(200);
-			first7 = first7 - 100;
-			second7 = rand.nextInt(200);
-			second7 = second7 - 100;
-			String f7 = Float.toString(first7);
-			jfirst7.setText(f7);
-			String s7 = Float.toString(second7);
-			jsecond7.setText(s7);
-
-			first8 = rand.nextInt(200);
-			first8 = first8 - 100;
-			second8 = rand.nextInt(200);
-			second8 = second8 - 100;
-			String f8 = Float.toString(first8);
-			jfirst8.setText(f8);
-			String s8 = Float.toString(second8);
-			jsecond8.setText(s8);
-
-			first9 = rand.nextInt(200);
-			first9 = first9 - 100;
-			second9 = rand.nextInt(200);
-			second9 = second9 - 100;
-			String f9 = Float.toString(first9);
-			jfirst9.setText(f9);
-			String s9 = Float.toString(second9);
-			jsecond9.setText(s9);
-
-			first10 = rand.nextInt(200);
-			first10 = first10 - 100;
-			second10 = rand.nextInt(200);
-			second10 = second10 - 100;
-			String f10 = Float.toString(first10);
-			jfirst10.setText(f10);
-			String s10 = Float.toString(second10);
-			jsecond10.setText(s10);
+			fun();
+			random();
 		}
-		if (e.getSource() == SubmitBtn) {
+		// 提交答案并判断
+		if (e.getSource() == SubmitBtn && flag == 1) {
 			double a1, a2, a3, a4, a5, a6, a7, a8, a9, a10;
 			int true1 = 0;
 			// 计算第一道题
@@ -538,10 +449,10 @@ public class arithmetic implements ActionListener {
 			if (result1.equals(answer1)) {
 				jjudge1.setText("对");
 				true1 = true1 + 1;
-				jjright.setText(Integer.toString(true1));
+				jjright.setText(Integer.toString(true1));// 显示答对题数
 			} else {
 				jjudge1.setText("错");
-				jjresult1.setText(answer1);
+				jjresult1.setText(answer1);// 显示正确结果
 			}
 			// 计算第二道题
 			String answer2 = null;
@@ -660,6 +571,741 @@ public class arithmetic implements ActionListener {
 				jjudge10.setText("错");
 				jjresult10.setText(answer10);
 			}
+		}
+
+		/* 减法计算 */
+		else if (e.getSource() == SubBtn) {
+			flag = 2;
+			jsymbol1.setText("-");
+			jsymbol2.setText("-");
+			jsymbol3.setText("-");
+			jsymbol4.setText("-");
+			jsymbol5.setText("-");
+			jsymbol6.setText("-");
+			jsymbol7.setText("-");
+			jsymbol8.setText("-");
+			jsymbol9.setText("-");
+			jsymbol10.setText("-");
+			fun();
+			random();
+		}
+		if (e.getSource() == SubmitBtn && flag == 2) {
+			double a1_1, a2_1, a3_1, a4_1, a5_1, a6_1, a7_1, a8_1, a9_1, a10_1;
+			int true2 = 0;
+			// 计算第一道题
+			String answer1_1 = null;
+			a1_1 = first1 - second1;
+			answer1_1 = Double.toString(a1_1);
+			String result1_1 = janswer1.getText();
+			if (result1_1.equals(answer1_1)) {
+				jjudge1.setText("对");
+				true2 = true2 + 1;
+				jjright.setText(Integer.toString(true2));
+			} else {
+				jjudge1.setText("错");
+				jjresult1.setText(answer1_1);
+			}
+			// 计算第二道题
+			String answer2_1 = null;
+			a2_1 = first2 - second2;
+			answer2_1 = Double.toString(a2_1);
+			String result2_1 = janswer2.getText();
+			if (result2_1.equals(answer2_1)) {
+				jjudge2.setText("对");
+				true2 = true2 + 1;
+				jjright.setText(Integer.toString(true2));
+			} else {
+				jjudge2.setText("错");
+				jjresult2.setText(answer2_1);
+			}
+			// 计算第三道题
+			String answer3_1 = null;
+			a3_1 = first3 - second3;
+			answer3_1 = Double.toString(a3_1);
+			String result3_1 = janswer3.getText();
+			if (result3_1.equals(answer3_1)) {
+				jjudge3.setText("对");
+				true2 = true2 + 1;
+				jjright.setText(Integer.toString(true2));
+			} else {
+				jjudge3.setText("错");
+				jjresult3.setText(answer3_1);
+			}
+			// 计算第四道题
+			String answer4_1 = null;
+			a4_1 = first4 - second4;
+			answer4_1 = Double.toString(a4_1);
+			String result4_1 = janswer4.getText();
+			if (result4_1.equals(answer4_1)) {
+				jjudge4.setText("对");
+				true2 = true2 + 1;
+				jjright.setText(Integer.toString(true2));
+			} else {
+				jjudge4.setText("错");
+				jjresult4.setText(answer4_1);
+			}
+			// 计算第五道题
+			String answer5_1 = null;
+			a5_1 = first5 - second5;
+			answer5_1 = Double.toString(a5_1);
+			String result5_1 = janswer5.getText();
+			if (result5_1.equals(answer5_1)) {
+				jjudge5.setText("对");
+				true2 = true2 + 1;
+				jjright.setText(Integer.toString(true2));
+			} else {
+				jjudge5.setText("错");
+				jjresult5.setText(answer5_1);
+			}
+			// 计算第六道题
+			String answer6_1 = null;
+			a6_1 = first6 - second6;
+			answer6_1 = Double.toString(a6_1);
+			String result6_1 = janswer6.getText();
+			if (result6_1.equals(answer6_1)) {
+				jjudge6.setText("对");
+				true2 = true2 + 1;
+				jjright.setText(Integer.toString(true2));
+			} else {
+				jjudge6.setText("错");
+				jjresult6.setText(answer6_1);
+			}
+			// 计算第七道题
+			String answer7_1 = null;
+			a7_1 = first7 - second7;
+			answer7_1 = Double.toString(a7_1);
+			String result7_1 = janswer7.getText();
+			if (result7_1.equals(answer7_1)) {
+				jjudge7.setText("对");
+				true2 = true2 + 1;
+				jjright.setText(Integer.toString(true2));
+			} else {
+				jjudge7.setText("错");
+				jjresult7.setText(answer7_1);
+			}
+			// 计算第八道题
+			String answer8_1 = null;
+			a8_1 = first8 - second8;
+			answer8_1 = Double.toString(a8_1);
+			String result8_1 = janswer8.getText();
+			if (result8_1.equals(answer8_1)) {
+				jjudge8.setText("对");
+				true2 = true2 + 1;
+				jjright.setText(Integer.toString(true2));
+			} else {
+				jjudge8.setText("错");
+				jjresult8.setText(answer8_1);
+			}
+			// 计算第九道题
+			String answer9_1 = null;
+			a9_1 = first9 - second9;
+			answer9_1 = Double.toString(a9_1);
+			String result9_1 = janswer9.getText();
+			if (result9_1.equals(answer9_1)) {
+				jjudge9.setText("对");
+				true2 = true2 + 1;
+				jjright.setText(Integer.toString(true2));
+			} else {
+				jjudge9.setText("错");
+				jjresult9.setText(answer9_1);
+			}
+			// 计算第十道题
+			String answer10_1 = null;
+			a10_1 = first10 - second10;
+			answer10_1 = Double.toString(a10_1);
+			String result10_1 = janswer10.getText();
+			if (result10_1.equals(answer10_1)) {
+				jjudge10.setText("对");
+				true2 = true2 + 1;
+				jjright.setText(Integer.toString(true2));
+			} else {
+				jjudge10.setText("错");
+				jjresult10.setText(answer10_1);
+			}
+		}
+
+		/* 乘法计算 */
+		else if (e.getSource() == MulBtn) {
+			flag = 3;
+			jsymbol1.setText("*");
+			jsymbol2.setText("*");
+			jsymbol3.setText("*");
+			jsymbol4.setText("*");
+			jsymbol5.setText("*");
+			jsymbol6.setText("*");
+			jsymbol7.setText("*");
+			jsymbol8.setText("*");
+			jsymbol9.setText("*");
+			jsymbol10.setText("*");
+			fun();
+			random();
+		}
+		if (e.getSource() == SubmitBtn && flag == 3) {
+			double a1_2, a2_2, a3_2, a4_2, a5_2, a6_2, a7_2, a8_2, a9_2, a10_2;
+			int true3 = 0;
+			// 计算第一道题
+			String answer1_2 = null;
+			a1_2 = first1 * second1;
+			answer1_2 = Double.toString(a1_2);
+			String result1_2 = janswer1.getText();
+			if (result1_2.equals(answer1_2)) {
+				jjudge1.setText("对");
+				true3 = true3 + 1;
+				jjright.setText(Integer.toString(true3));
+			} else {
+				jjudge1.setText("错");
+				jjresult1.setText(answer1_2);
+			}
+			// 计算第二道题
+			String answer2_2 = null;
+			a2_2 = first2 * second2;
+			answer2_2 = Double.toString(a2_2);
+			String result2_2 = janswer2.getText();
+			if (result2_2.equals(answer2_2)) {
+				jjudge2.setText("对");
+				true3 = true3 + 1;
+				jjright.setText(Integer.toString(true3));
+			} else {
+				jjudge2.setText("错");
+				jjresult2.setText(answer2_2);
+			}
+			// 计算第三道题
+			String answer3_2 = null;
+			a3_2 = first3 * second3;
+			answer3_2 = Double.toString(a3_2);
+			String result3_2 = janswer3.getText();
+			if (result3_2.equals(answer3_2)) {
+				jjudge3.setText("对");
+				true3 = true3 + 1;
+				jjright.setText(Integer.toString(true3));
+			} else {
+				jjudge3.setText("错");
+				jjresult3.setText(answer3_2);
+			}
+			// 计算第四道题
+			String answer4_2 = null;
+			a4_2 = first4 * second4;
+			answer4_2 = Double.toString(a4_2);
+			String result4_2 = janswer4.getText();
+			if (result4_2.equals(answer4_2)) {
+				jjudge4.setText("对");
+				true3 = true3 + 1;
+				jjright.setText(Integer.toString(true3));
+			} else {
+				jjudge4.setText("错");
+				jjresult4.setText(answer4_2);
+			}
+			// 计算第五道题
+			String answer5_2 = null;
+			a5_2 = first5 * second5;
+			answer5_2 = Double.toString(a5_2);
+			String result5_2 = janswer5.getText();
+			if (result5_2.equals(answer5_2)) {
+				jjudge5.setText("对");
+				true3 = true3 + 1;
+				jjright.setText(Integer.toString(true3));
+			} else {
+				jjudge5.setText("错");
+				jjresult5.setText(answer5_2);
+			}
+			// 计算第六道题
+			String answer6_2 = null;
+			a6_2 = first6 * second6;
+			answer6_2 = Double.toString(a6_2);
+			String result6_2 = janswer6.getText();
+			if (result6_2.equals(answer6_2)) {
+				jjudge6.setText("对");
+				true3 = true3 + 1;
+				jjright.setText(Integer.toString(true3));
+			} else {
+				jjudge6.setText("错");
+				jjresult6.setText(answer6_2);
+			}
+			// 计算第七道题
+			String answer7_2 = null;
+			a7_2 = first7 * second7;
+			answer7_2 = Double.toString(a7_2);
+			String result7_2 = janswer7.getText();
+			if (result7_2.equals(answer7_2)) {
+				jjudge7.setText("对");
+				true3 = true3 + 1;
+				jjright.setText(Integer.toString(true3));
+			} else {
+				jjudge7.setText("错");
+				jjresult7.setText(answer7_2);
+			}
+			// 计算第八道题
+			String answer8_2 = null;
+			a8_2 = first8 * second8;
+			answer8_2 = Double.toString(a8_2);
+			String result8_2 = janswer8.getText();
+			if (result8_2.equals(answer8_2)) {
+				jjudge8.setText("对");
+				true3 = true3 + 1;
+				jjright.setText(Integer.toString(true3));
+			} else {
+				jjudge8.setText("错");
+				jjresult8.setText(answer8_2);
+			}
+			// 计算第九道题
+			String answer9_2 = null;
+			a9_2 = first9 * second9;
+			answer9_2 = Double.toString(a9_2);
+			String result9_2 = janswer9.getText();
+			if (result9_2.equals(answer9_2)) {
+				jjudge9.setText("对");
+				true3 = true3 + 1;
+				jjright.setText(Integer.toString(true3));
+			} else {
+				jjudge9.setText("错");
+				jjresult9.setText(answer9_2);
+			}
+			// 计算第十道题
+			String answer10_2 = null;
+			a10_2 = first10 * second10;
+			answer10_2 = Double.toString(a10_2);
+			String result10_2 = janswer10.getText();
+			if (result10_2.equals(answer10_2)) {
+				jjudge10.setText("对");
+				true3 = true3 + 1;
+				jjright.setText(Integer.toString(true3));
+			} else {
+				jjudge10.setText("错");
+				jjresult10.setText(answer10_2);
+			}
+		}
+
+		/* 除法计算 */
+		else if (e.getSource() == DivBtn) {
+			flag = 4;
+			jsymbol1.setText("/");
+			jsymbol2.setText("/");
+			jsymbol3.setText("/");
+			jsymbol4.setText("/");
+			jsymbol5.setText("/");
+			jsymbol6.setText("/");
+			jsymbol7.setText("/");
+			jsymbol8.setText("/");
+			jsymbol9.setText("/");
+			jsymbol10.setText("/");
+			fun();
+			random();
+		}
+		if (e.getSource() == SubmitBtn && flag == 4) {
+			double a1_3, a2_3, a3_3, a4_3, a5_3, a6_3, a7_3, a8_3, a9_3, a10_3;
+			int true4 = 0;
+			// 计算第一道题
+			String answer1_3 = null;
+			if (second1 == 0) {
+				do {
+					random();
+				} while (second1 != 0);
+			}// 除数为0时的操作
+			a1_3 = first1 / second1;
+			answer1_3 = String.format("%.2f", a1_3);// 除法结果保留小数点后两位
+			String result1_3 = janswer1.getText();
+			if (result1_3.equals(answer1_3)) {// 判断输入结果与正确结果是否相等
+				jjudge1.setText("对");
+				true4 = true4 + 1;
+				jjright.setText(Integer.toString(true4));
+			} else {
+				jjudge1.setText("错");
+				jjresult1.setText(answer1_3);
+			}
+			// 计算第二道题
+			String answer2_3 = null;
+			if (second1 == 0) {
+				do {
+					random();
+				} while (second1 != 0);
+			}
+			a2_3 = first2 / second2;
+			answer2_3 = String.format("%.2f", a2_3);
+			String result2_3 = janswer2.getText();
+			if (result2_3.equals(answer2_3)) {
+				jjudge2.setText("对");
+				true4 = true4 + 1;
+				jjright.setText(Integer.toString(true4));
+			} else {
+				jjudge2.setText("错");
+				jjresult2.setText(answer2_3);
+			}
+			// 计算第三道题
+			String answer3_3 = null;
+			if (second1 == 0) {
+				do {
+					random();
+				} while (second1 != 0);
+			}
+			a3_3 = first3 / second3;
+			answer3_3 = String.format("%.2f", a3_3);
+			String result3_3 = janswer3.getText();
+			if (result3_3.equals(answer3_3)) {
+				jjudge3.setText("对");
+				true4 = true4 + 1;
+				jjright.setText(Integer.toString(true4));
+			} else {
+				jjudge3.setText("错");
+				jjresult3.setText(answer3_3);
+			}
+			// 计算第四道题
+			String answer4_3 = null;
+			if (second1 == 0) {
+				do {
+					random();
+				} while (second1 != 0);
+			}
+			a4_3 = first4 / second4;
+			answer4_3 = String.format("%.2f", a4_3);
+			String result4_3 = janswer4.getText();
+			if (result4_3.equals(answer4_3)) {
+				jjudge4.setText("对");
+				true4 = true4 + 1;
+				jjright.setText(Integer.toString(true4));
+			} else {
+				jjudge4.setText("错");
+				jjresult4.setText(answer4_3);
+			}
+			// 计算第五道题
+			String answer5_3 = null;
+			if (second1 == 0) {
+				do {
+					random();
+				} while (second1 != 0);
+			}
+			a5_3 = first5 / second5;
+			answer5_3 = String.format("%.2f", a5_3);
+			String result5_3 = janswer5.getText();
+			if (result5_3.equals(answer5_3)) {
+				jjudge5.setText("对");
+				true4 = true4 + 1;
+				jjright.setText(Integer.toString(true4));
+			} else {
+				jjudge5.setText("错");
+				jjresult5.setText(answer5_3);
+			}
+			// 计算第六道题
+			String answer6_3 = null;
+			if (second1 == 0) {
+				do {
+					random();
+				} while (second1 != 0);
+			}
+			a6_3 = first6 / second6;
+			answer6_3 = String.format("%.2f", a6_3);
+			String result6_3 = janswer6.getText();
+			if (result6_3.equals(answer6_3)) {
+				jjudge6.setText("对");
+				true4 = true4 + 1;
+				jjright.setText(Integer.toString(true4));
+			} else {
+				jjudge6.setText("错");
+				jjresult6.setText(answer6_3);
+			}
+			// 计算第七道题
+			String answer7_3 = null;
+			if (second1 == 0) {
+				do {
+					random();
+				} while (second1 != 0);
+			}
+			a7_3 = first7 / second7;
+			answer7_3 = String.format("%.2f", a7_3);
+			String result7_3 = janswer7.getText();
+			if (result7_3.equals(answer7_3)) {
+				jjudge7.setText("对");
+				true4 = true4 + 1;
+				jjright.setText(Integer.toString(true4));
+			} else {
+				jjudge7.setText("错");
+				jjresult7.setText(answer7_3);
+			}
+			// 计算第八道题
+			String answer8_3 = null;
+			if (second1 == 0) {
+				do {
+					random();
+				} while (second1 != 0);
+			}
+			a8_3 = first8 / second8;
+			answer8_3 = String.format("%.2f", a8_3);
+			String result8_3 = janswer8.getText();
+			if (result8_3.equals(answer8_3)) {
+				jjudge8.setText("对");
+				true4 = true4 + 1;
+				jjright.setText(Integer.toString(true4));
+			} else {
+				jjudge8.setText("错");
+				jjresult8.setText(answer8_3);
+			}
+			// 计算第九道题
+			String answer9_3 = null;
+			if (second1 == 0) {
+				do {
+					random();
+				} while (second1 != 0);
+			}
+			a9_3 = first9 / second9;
+			answer9_3 = String.format("%.2f", a9_3);
+			String result9_3 = janswer9.getText();
+			if (result9_3.equals(answer9_3)) {
+				jjudge9.setText("对");
+				true4 = true4 + 1;
+				jjright.setText(Integer.toString(true4));
+			} else {
+				jjudge9.setText("错");
+				jjresult9.setText(answer9_3);
+			}
+			// 计算第十道题
+			String answer10_3 = null;
+			if (second1 == 0) {
+				do {
+					random();
+				} while (second1 != 0);
+			}
+			a10_3 = first10 / second10;
+			answer10_3 = String.format("%.2f", a10_3);
+			String result10_3 = janswer10.getText();
+			if (result10_3.equals(answer10_3)) {
+				jjudge10.setText("对");
+				true4 = true4 + 1;
+				jjright.setText(Integer.toString(true4));
+			} else {
+				jjudge10.setText("错");
+				jjresult10.setText(answer10_3);
+			}
+		} else if (e.getSource() == ExitBtn) {
+			System.exit(0);
+		}
+	}
+
+	public void judge1(String result, String answer, int true1) {
+		if (result.equals(answer)) {
+			jjudge1.setText("对");
+			true1 = true1 + 1;
+		} else {
+			jjudge1.setText("错");
+			jjresult1.setText(answer);// 显示正确结果
+		}
+	}
+
+	/* 将十个题分别的第一个数和第二个数置为空，将答对题数置为“？” */
+	public void fun() {
+		janswer1.setText("");
+		janswer2.setText("");
+		janswer3.setText("");
+		janswer4.setText("");
+		janswer5.setText("");
+		janswer6.setText("");
+		janswer7.setText("");
+		janswer8.setText("");
+		janswer9.setText("");
+		janswer10.setText("");
+		jjresult1.setText("");
+		jjresult2.setText("");
+		jjresult3.setText("");
+		jjresult4.setText("");
+		jjresult5.setText("");
+		jjresult6.setText("");
+		jjresult7.setText("");
+		jjresult8.setText("");
+		jjresult9.setText("");
+		jjresult10.setText("");
+		jjright.setText("0");
+	}
+
+	/* 产生十道题分别第一个数和第二个数的随机数 */
+	public void random() {
+		Random rand = new Random();
+
+		first1 = rand.nextInt(200);
+		first1 = first1 - 100;
+		second1 = rand.nextInt(200);
+		second1 = second1 - 100;
+		if (first1 < 0) {
+			String f1 = Float.toString(first1);
+			jfirst1.setText("(" + f1 + ")");
+		} else {
+			String f1 = Float.toString(first1);
+			jfirst1.setText(f1);
+		}
+		if (second1 < 0) {
+			String s1 = Float.toString(second1);
+			jsecond1.setText("(" + s1 + ")");
+		} else {
+			String s1 = Float.toString(second1);
+			jsecond1.setText(s1);
+		}
+
+		first2 = rand.nextInt(200);
+		first2 = first2 - 100;
+		second2 = rand.nextInt(200);
+		second2 = second2 - 100;
+		if (first2 < 0) {
+			String f2 = Float.toString(first2);
+			jfirst2.setText("(" + f2 + ")");
+		} else {
+			String f2 = Float.toString(first2);
+			jfirst2.setText(f2);
+		}
+		if (second2 < 0) {
+			String s2 = Float.toString(second2);
+			jsecond2.setText("(" + s2 + ")");
+		} else {
+			String s2 = Float.toString(second2);
+			jsecond2.setText(s2);
+		}
+
+		first3 = rand.nextInt(200);
+		first3 = first3 - 100;
+		second3 = rand.nextInt(200);
+		second3 = second3 - 100;
+		if (first3 < 0) {
+			String f3 = Float.toString(first3);
+			jfirst3.setText("(" + f3 + ")");
+		} else {
+			String f3 = Float.toString(first3);
+			jfirst3.setText(f3);
+		}
+		if (second3 < 0) {
+			String s3 = Float.toString(second3);
+			jsecond3.setText("(" + s3 + ")");
+		} else {
+			String s3 = Float.toString(second3);
+			jsecond3.setText(s3);
+		}
+
+		first4 = rand.nextInt(200);
+		first4 = first4 - 100;
+		second4 = rand.nextInt(200);
+		second4 = second4 - 100;
+		if (first4 < 0) {
+			String f4 = Float.toString(first4);
+			jfirst4.setText("(" + f4 + ")");
+		} else {
+			String f4 = Float.toString(first4);
+			jfirst4.setText(f4);
+		}
+		if (second4 < 0) {
+			String s4 = Float.toString(second4);
+			jsecond4.setText("(" + s4 + ")");
+		} else {
+			String s4 = Float.toString(second4);
+			jsecond4.setText(s4);
+		}
+
+		first5 = rand.nextInt(200);
+		first5 = first5 - 100;
+		second5 = rand.nextInt(200);
+		second5 = second5 - 100;
+		if (first5 < 0) {
+			String f5 = Float.toString(first5);
+			jfirst5.setText("(" + f5 + ")");
+		} else {
+			String f5 = Float.toString(first5);
+			jfirst5.setText(f5);
+		}
+		if (second5 < 0) {
+			String s5 = Float.toString(second5);
+			jsecond5.setText("(" + s5 + ")");
+		} else {
+			String s5 = Float.toString(second5);
+			jsecond5.setText(s5);
+		}
+
+		first6 = rand.nextInt(200);
+		first6 = first6 - 100;
+		second6 = rand.nextInt(200);
+		second6 = second6 - 100;
+		if (first6 < 0) {
+			String f6 = Float.toString(first6);
+			jfirst6.setText("(" + f6 + ")");
+		} else {
+			String f6 = Float.toString(first6);
+			jfirst6.setText(f6);
+		}
+		if (second6 < 0) {
+			String s6 = Float.toString(second6);
+			jsecond6.setText("(" + s6 + ")");
+		} else {
+			String s6 = Float.toString(second6);
+			jsecond6.setText(s6);
+		}
+
+		first7 = rand.nextInt(200);
+		first7 = first7 - 100;
+		second7 = rand.nextInt(200);
+		second7 = second7 - 100;
+		if (first7 < 0) {
+			String f7 = Float.toString(first7);
+			jfirst7.setText("(" + f7 + ")");
+		} else {
+			String f7 = Float.toString(first7);
+			jfirst7.setText(f7);
+		}
+		if (second7 < 0) {
+			String s7 = Float.toString(second7);
+			jsecond7.setText("(" + s7 + ")");
+		} else {
+			String s7 = Float.toString(second7);
+			jsecond7.setText(s7);
+		}
+
+		first8 = rand.nextInt(200);
+		first8 = first8 - 100;
+		second8 = rand.nextInt(200);
+		second8 = second8 - 100;
+		if (first8 < 0) {
+			String f8 = Float.toString(first8);
+			jfirst8.setText("(" + f8 + ")");
+		} else {
+			String f8 = Float.toString(first8);
+			jfirst8.setText(f8);
+		}
+		if (second8 < 0) {
+			String s8 = Float.toString(second8);
+			jsecond8.setText("(" + s8 + ")");
+		} else {
+			String s8 = Float.toString(second8);
+			jsecond8.setText(s8);
+		}
+
+		first9 = rand.nextInt(200);
+		first9 = first9 - 100;
+		second9 = rand.nextInt(200);
+		second9 = second9 - 100;
+		if (first9 < 0) {
+			String f9 = Float.toString(first9);
+			jfirst9.setText("(" + f9 + ")");
+		} else {
+			String f9 = Float.toString(first9);
+			jfirst9.setText(f9);
+		}
+		if (second9 < 0) {
+			String s9 = Float.toString(second9);
+			jsecond9.setText("(" + s9 + ")");
+		} else {
+			String s9 = Float.toString(second9);
+			jsecond9.setText(s9);
+		}
+
+		first10 = rand.nextInt(200);
+		first10 = first10 - 100;
+		second10 = rand.nextInt(200);
+		second10 = second10 - 100;
+		if (first10 < 0) {
+			String f10 = Float.toString(first10);
+			jfirst10.setText("(" + f10 + ")");
+		} else {
+			String f10 = Float.toString(first10);
+			jfirst10.setText(f10);
+		}
+		if (second10 < 0) {
+			String s10 = Float.toString(second10);
+			jsecond10.setText("(" + s10 + ")");
+		} else {
+			String s10 = Float.toString(second10);
+			jsecond10.setText(s10);
 		}
 	}
 }
